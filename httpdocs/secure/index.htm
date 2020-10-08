@@ -1,0 +1,273 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head runat="server">
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Admin Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" data-version="1.1.0" href="styles/shards-dashboards.1.1.0.min.css">
+    <link rel="stylesheet" href="styles/extras.1.1.0.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-footable/0.1.0/css/footable.min.css" />
+    <link rel="shortcut icon" href="img/Untitled.ico"/>
+    <style>
+.loading {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0,0,0,.04);
+}
+.loading-wheel {
+    width: 20px;
+    height: 20px;
+    margin-top: -40px;
+    margin-left: -40px;
+    
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    
+    border-width: 30px;
+    border-radius: 50%;
+
+}
+.style-2 .loading-wheel {
+    border-color: #ccc transparent;
+}
+    </style>
+    <script type="application/javascript">
+        window.tiledeskSettings =
+    {
+        projectid: "5d96f3502bab3c0017223d10"
+    };
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id; //js.async=!0;
+            js.src = "https://widget.tiledesk.com/v3/launch.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        } (document, 'script', 'tiledesk-jssdk'));
+</script>
+</head>
+<body class="h-100">
+    <form runat="server">
+    <div class="container-fluid">
+      <div class="row">
+        <!-- Main Sidebar -->
+        <aside class="main-sidebar col-12 col-md-3 col-lg-2 px-0" >
+          <div class="main-navbar">
+            <nav class="navbar align-items-stretch navbar-light bg-white flex-md-nowrap border-bottom p-0">
+              <a class="navbar-brand w-100 mr-0" style="line-height: 25px;">
+                <div class="d-table m-auto">
+                  <img id="main-logo" class="d-inline-block align-top mr-1" 
+                        style="max-width: 127px;" src="img/Untitled-1.png">
+                  
+                </div>
+              </a>
+              <a class="toggle-sidebar d-sm-inline d-md-none d-lg-none">
+                <i class="material-icons">&#xE5C4;</i>
+              </a>
+            </nav>
+          </div>
+          
+          <div class="nav-wrapper">
+            <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link " href="index.htm">
+                  <span>Home</span>
+                </a>
+              </li>
+            <li class="nav-item">
+                <a class="nav-link " href="accounts.htm">
+                  <span>Accounts</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link " href="events.htm">
+                  <span>Event Calendar</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link " href="gallery.htm">
+                  <span>Gallery</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link " href="notifications.htm">
+                  <span>Notification History</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </aside>
+        <!-- End Main Sidebar -->
+        <main class="main-content col-lg-10 col-md-9 col-sm-12 p-0 offset-lg-2 offset-md-3">
+          <div class="main-navbar sticky-top bg-white">
+            <!-- Main Navbar -->
+            <nav class="navbar align-items-stretch navbar-light flex-md-nowrap p-0">
+              <form action="#" class="main-navbar__search w-100 d-none d-md-flex d-lg-flex">
+                <div class="input-group input-group-seamless ml-3">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">
+                    </div>
+                  </div>
+                  <div></div> </div>
+              </form>
+              <ul class="navbar-nav border-left flex-row ">
+                <li class="nav-item border-right dropdown notifications" style="display: flex; align-items: center; width: 220px; height: 60px;">
+                  <a class="nav-link nav-link-icon text-center" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a href="#/" data-toggle="modal" data-target="#myNotify" onclick="clearnotify()"><div class="nav-link-icon__wrapper" >
+                      <i class="material-icons">notifications</i>
+                      <span  style="font-size: small">Send Notification</span>
+                    </div></a>
+                  </a>
+                </li>
+       
+                    <li class="nav-item dropdown" style="display: flex; align-items: center; width: 220px; height: 60px;">
+                    <a class="nav-link dropdown-toggle text-nowrap px-3" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                  <img class="user-avatar rounded-circle mr-2" src="img/user.png" alt="User Avatar"/>
+                  </a>
+                  
+                  <div class="dropdown-menu dropdown-menu-small">
+                    <a class="dropdown-item" href="profile.htm">
+                      <i class="material-icons">&#xE7FD;</i> Profile</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item text-danger" href="" onclick = "logout()">
+                      <i class="material-icons text-danger">&#xE879;</i> Logout </a>
+                  </div>
+                         <a href="login.htm" id="loginemail" style="width: 200px; word-wrap: break-word; font-size: x-small;"></a>
+                          </li>
+                       <span class="bold"></span>
+                   
+                  
+                 
+              </ul>
+              <nav class="nav">
+                <a href="#" class="nav-link nav-link-icon toggle-sidebar d-md-inline d-lg-none text-center border-left" data-toggle="collapse" data-target=".header-navbar" aria-expanded="false" aria-controls="header-navbar">
+                  <i class="material-icons">&#xE5D2;</i>
+                </a>
+              </nav>
+            </nav>
+          </div>
+          <!-- / .main-navbar -->
+          <div class="main-content-container container-fluid px-4">
+            <div class="error__content">
+            <br />
+            <br />
+            <div class="col-lg-12">
+                <div class="card card-small mb-4">
+             <div style="margin: 10px">
+             <div><img id="imagePreview" src="" width="96" height="80" onerror="this.onerror=null;this.src='img/logo-placeholder-generic.200x200.png';"/></div>
+             <div id="schoolname" style="font-size: medium; font-weight: bold"></div>
+             <h4>Summary</h4>
+             <div class="form-row">
+                              <div class="form-group col-md-4">
+                                <div><img src="img/students.png" /></div>
+                                <div id="students" style="font-weight: bold; color: #FF0000"></div>Student(s)</div>
+                              <div class="form-group col-md-4">
+                                <div><img src="img/events.png" /></div>
+                                <div id="events" style="font-weight: bold; color: #FF0000"></div>Event(s) Created</div>
+                                <div class="form-group col-md-4">
+                                <div><img src="img/notifications.png" /></div>
+                                <div id="notifications" style="font-weight: bold; color: #FF0000"></div>Notification(s) Sent</div>
+                            </div>
+                            <div class="form-row">
+                              <div class="form-group col-md-6">
+                                <div><img src="img/galleries.png" /></div>
+                                <div id="galleries" style="font-weight: bold; color: #FF0000"></div>Galleries Uploaded</div>
+                              <div class="form-group col-md-6">
+                                <div><img src="img/payments.png" /></div>
+                                Online fee collections are<div id="payments" style="font-weight: bold; color: #FF0000"></div></div>
+                            </div>
+           
+        </div>
+         </div>
+            </div>
+            </div>
+            <!-- / .error_content -->
+          </div>
+          <!-- / .error -->
+         <div class="loading style-2" id="overlay" style="display: none"><div class="loading-wheel"><img src="img/load.gif" alt="" /></div></div>
+         <div class="loading style-2" id="sendoverlay" style="display: none"><div class="loading-wheel"><img src="img/13fabe368d08211706da14d461727b50.gif" alt="" /></div></div>
+        <footer class="main-footer d-flex p-2 px-3 bg-white border-top">
+            <ul class="nav">
+              <li class="nav-item">
+                <a class="nav-link" href="privacy.htm">Privacy Policy</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="terms.htm">Terms of Use</a>
+              </li>
+            </ul>
+            <span class="copyright ml-auto my-auto mr-2">Copyright © 2019 
+              <a>Communic8a</a>
+            </span>
+          </footer>
+          </main>
+      </div>
+    </div>
+    <script src='scripts/jquery.min.js'></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+    <script src="https://unpkg.com/shards-ui@latest/dist/js/shards.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sharrre/2.0.1/jquery.sharrre.min.js"></script>
+    <script src="Scripts/extras.1.1.0.min.js"></script>
+    <script src="Scripts/shards-dashboards.1.1.0.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-footable/0.1.0/js/footable.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+    <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+        apiKey: "AIzaSyAcVprPwiFR7Z5qX14wyD54nXJHNyadfrs",
+        authDomain: "communic8a.firebaseapp.com",
+        databaseURL: "https://communic8a.firebaseio.com",
+        projectId: "communic8a",
+        storageBucket: "communic8a.appspot.com",
+        messagingSenderId: "89971371271",
+        appId: "1:89971371271:web:0c4a0cba82f6d7443da9a2",
+    }
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+</script>
+<script src="logic/index.js"></script>
+     </form>   
+     <div id="myNotify" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Send Notification to all</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+      <div class="form-row">
+                               <div class="form-group col-md-6">
+                               <input type="text" class="form-control" id="sendtitle" placeholder="Title" /></div>
+                               </div>
+        <div class="form-row">
+                               <div class="form-group col-md-6">
+                                <textarea class="form-control" id="sendnotify" name="Address" rows="5" placeholder="Notification (max 500 characters)"></textarea></div></div>
+                               </div>
+                            <button type="button" id="Button3" class="btn btn-accent" onclick="SendNotification()">Send</button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
+
+
+             
+

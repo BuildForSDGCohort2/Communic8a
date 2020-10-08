@@ -1,0 +1,488 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head runat="server">
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Admin Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" data-version="1.1.0" href="styles/shards-dashboards.1.1.0.min.css">
+    <link rel="stylesheet" href="styles/extras.1.1.0.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-footable/0.1.0/css/footable.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
+    <link rel="shortcut icon" href="img/Untitled.ico" />
+    <style>
+     .left-inner-addon {
+    position: relative;
+    }
+     .left-inner-addon input {
+    padding-left: 30px;    
+    }
+     .left-inner-addon span {
+    position: absolute;
+    left: 0px;
+    padding: 7px 12px;
+    pointer-events: none;
+    }
+.loading {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0,0,0,.04);
+}
+.loading-wheel {
+    width: 20px;
+    height: 20px;
+    margin-top: -40px;
+    margin-left: -40px;
+    
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    
+    border-width: 30px;
+    border-radius: 50%;
+
+}
+.style-2 .loading-wheel {
+    border-color: #ccc transparent;
+}
+    </style>
+    <script type="application/javascript">
+        window.tiledeskSettings =
+    {
+        projectid: "5d96f3502bab3c0017223d10"
+    };
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id; //js.async=!0;
+            js.src = "https://widget.tiledesk.com/v3/launch.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        } (document, 'script', 'tiledesk-jssdk'));
+</script>
+</head>
+<body class="h-100">
+    <form runat="server">
+    <div class="container-fluid">
+      <div class="row">
+        <!-- Main Sidebar -->
+        <aside class="main-sidebar col-12 col-md-3 col-lg-2 px-0">
+          <div class="main-navbar">
+            <nav class="navbar align-items-stretch navbar-light bg-white flex-md-nowrap border-bottom p-0">
+              <a class="navbar-brand w-100 mr-0" style="line-height: 25px;">
+                <div class="d-table m-auto">
+                  <img id="main-logo" class="d-inline-block align-top mr-1" 
+                        style="max-width: 127px;" src="img/Untitled-1.png">
+                  
+                </div>
+              </a>
+              <a class="toggle-sidebar d-sm-inline d-md-none d-lg-none">
+                <i class="material-icons">&#xE5C4;</i>
+              </a>
+            </nav>
+          </div>
+          
+               <div class="nav-wrapper">
+            <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link " href="index.htm">
+                  <span>Home</span>
+                </a>
+              </li>
+            <li class="nav-item">
+                <a class="nav-link " href="accounts.htm">
+                  <span>Accounts</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link " href="events.htm">
+                  <span>Event Calendar</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link " href="gallery.htm">
+                  <span>Gallery</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link " href="notifications.htm">
+                  <span>Notification History</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </aside>
+        <!-- End Main Sidebar -->
+        <main class="main-content col-lg-10 col-md-9 col-sm-12 p-0 offset-lg-2 offset-md-3">
+          <div class="main-navbar sticky-top bg-white">
+            <!-- Main Navbar -->
+            <nav class="navbar align-items-stretch navbar-light flex-md-nowrap p-0">
+              <form action="#" class="main-navbar__search w-100 d-none d-md-flex d-lg-flex">
+                <div class="input-group input-group-seamless ml-3">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">
+                    </div>
+                  </div>
+                  <div></div> </div>
+              </form>
+              <ul class="navbar-nav border-left flex-row ">
+                <li class="nav-item border-right dropdown notifications" style="display: flex; align-items: center; width: 220px; height: 60px;">
+                  <a class="nav-link nav-link-icon text-center" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a href="#/" data-toggle="modal" data-target="#myNotify" onclick="clearnotify()"><div class="nav-link-icon__wrapper" >
+                      <i class="material-icons">notifications</i>
+                      <span  style="font-size: small">Send Notification</span>
+                    </div></a>
+                  </a>
+                </li>
+       
+                    <li class="nav-item dropdown" style="display: flex; align-items: center; width: 220px; height: 60px;">
+                    <a class="nav-link dropdown-toggle text-nowrap px-3" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                  <img class="user-avatar rounded-circle mr-2" src="img/user.png" alt="User Avatar"/>
+                  </a>
+                  
+                  <div class="dropdown-menu dropdown-menu-small">
+                    <a class="dropdown-item" href="profile.htm">
+                      <i class="material-icons">&#xE7FD;</i> Profile</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item text-danger" href="" onclick = "logout()">
+                      <i class="material-icons text-danger">&#xE879;</i> Logout </a>
+                  </div>
+                         <a href="login.htm" id="loginemail" style="width: 200px; word-wrap: break-word; font-size: x-small;"></a>
+                          </li>
+                       <span class="bold"></span>
+                   
+                  
+                 
+              </ul>
+              <nav class="nav">
+                <a href="#" class="nav-link nav-link-icon toggle-sidebar d-md-inline d-lg-none text-center border-left" data-toggle="collapse" data-target=".header-navbar" aria-expanded="false" aria-controls="header-navbar">
+                  <i class="material-icons">&#xE5D2;</i>
+                </a>
+              </nav>
+            </nav>
+          </div>
+          <!-- / .main-navbar -->
+          <div class="main-content-container container-fluid px-4">
+            <div class="error__content">
+            <br />
+            <br />
+            <div class="col-lg-12">
+                <div class="card card-small mb-4">
+                <div style="margin: 10px">
+             <div id="heading"><div><img id="imagePreview" src="" width="96" height="80" onerror="this.onerror=null;this.src='img/logo-placeholder-generic.200x200.png';"/></div>
+             <div id="schoolname" style="font-size: medium; font-weight: bold"></div></div>
+             <h4 align="left">Accounts</h4>
+             <form id="studentsbind" >
+             <table id="students" class="stripe" cellspacing="0" width="100%">
+               <thead>
+                 <tr>
+                  <th style="display: none;">AccountId</th>
+                  <th>Name</th>
+                  <th>Surname</th>
+                  <th>Class</th>
+                  <th></th>
+                  <th></th>
+                 </tr>
+                </thead>
+                 <tbody>
+                 </tbody>
+             </table>
+             <button type="button" class="btn btn-info add"><i class="fa fa-plus"></i>Add Student</button>
+            </form>
+            <form id="student" style="display: none">
+            <div class="form-row">
+                              <div class="form-group col-md-6">
+                                <input type="text" class="form-control" id="Text1" style="display: none">
+                                <input type="text" class="form-control" id="Name" placeholder="Name"></div>
+                              <div class="form-group col-md-6">
+                                <input type="text" class="form-control" id="Surname" placeholder="Surname"></div>
+                            </div>
+                            <div class="form-row">
+                              <div class="form-group col-md-6">
+                                <input type="number" class="form-control" id="idnumber" placeholder="ID Number"> </div>
+                              <div class="form-group col-md-6">
+                                <input type="text" class="form-control" id="dob" placeholder="Date of Birth"> </div>
+                            </div>
+                            <div class="form-group">
+                              <label for="feInputAddress">Address</label>
+                              <textarea class="form-control" id="Address" name="Address" rows="5" placeholder="Address"></textarea> </div>
+                            <div class="form-row">
+                              <div class="left-inner-addon">
+                              <span>R</span>
+                               <input type="text" class="form-control" id="Fees" placeholder="Monthly School Fee"/></div>
+                               <div class="form-group col-md-2">
+                               <span>Monthly Pay Date:</span></div>
+                               <div class="form-group col-md-2">
+                                <input type="number" class="form-control" id="Number1" min="1" max="30" placeholder="0" onkeydown="return false" style="width: 80px" /></div>
+                               </div>
+                            
+                            <div class="form-row">
+                              <div class="form-group col-md-6">
+                                <input type="text" class="form-control" id="Parent1" placeholder="Parent 1's Name"></div>
+                              <div class="form-group col-md-6">
+                                <input type="text" class="form-control" id="ParentEmail1" placeholder="Parent 1's Email"></div>
+                               <div class="form-group col-md-6">
+                                <input type="text" class="form-control" id="ParentNumber1" placeholder="Parent 1's Phone Number"></div>
+                            </div>
+                            <div class="form-row">
+                              <div class="form-group col-md-6">
+                                <input type="text" class="form-control" id="Parent2" placeholder="Parent 2's Name"></div>
+                              <div class="form-group col-md-6">
+                                <input type="text" class="form-control" id="ParentEmail2" placeholder="Parent 2's Email"></div>
+                                <div class="form-group col-md-6">
+                                <input type="text" class="form-control" id="ParentNumber2" placeholder="Parent 2's Phone Number"></div>
+                            </div>
+                            <div class="form-row">
+                              <div class="form-group col-md-6">
+                                <input type="text" class="form-control" id="Class" placeholder="Class eg. 3B"></div>
+                              <div class="form-group col-md-6">
+                                <input type="text" class="form-control" id="StudentNumber" placeholder="Student Number"></div>
+                            </div>
+                            <button type="button" id="createbutton" class="btn btn-accent" onclick="Create()" style="display: none">Create Student Account</button>
+                            <button type="button" id="updatebutton" class="btn btn-accent" onclick="Update()" style="display: none">Update Student Account</button>
+                            <a href="#" onclick="Cancel()">cancel</a>
+            </form>
+      
+
+
+
+
+          </div> 
+        </div>
+         </div>
+            </div>
+            <!-- / .error_content -->
+          </div>
+          <!-- / .error -->
+          <div class="loading style-2" id="overlay" style="display: none"><div class="loading-wheel"><img src="img/load.gif" alt="" /></div></div>
+         <div class="loading style-2" id="sendoverlay" style="display: none"><div class="loading-wheel"><img src="img/13fabe368d08211706da14d461727b50.gif" alt="" /></div></div>
+        <footer class="main-footer d-flex p-2 px-3 bg-white border-top">
+            <ul class="nav">
+              <li class="nav-item">
+                <a class="nav-link" href="privacy.htm">Privacy Policy</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="terms.htm">Terms of Use</a>
+              </li>
+            </ul>
+            <span class="copyright ml-auto my-auto mr-2">Copyright © 2019 
+              <a>Communic8a</a>
+            </span>
+          </footer>
+          </main>
+      </div>
+    </div>
+    <script src='scripts/jquery.min.js'></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+    <script src="https://unpkg.com/shards-ui@latest/dist/js/shards.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sharrre/2.0.1/jquery.sharrre.min.js"></script>
+    <script src="Scripts/extras.1.1.0.min.js"></script>
+    <script src="Scripts/shards-dashboards.1.1.0.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-footable/0.1.0/js/footable.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+<script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+        apiKey: "AIzaSyAcVprPwiFR7Z5qX14wyD54nXJHNyadfrs",
+        authDomain: "communic8a.firebaseapp.com",
+        databaseURL: "https://communic8a.firebaseio.com",
+        projectId: "communic8a",
+        storageBucket: "communic8a.appspot.com",
+        messagingSenderId: "89971371271",
+        appId: "1:89971371271:web:0c4a0cba82f6d7443da9a2",
+    }
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+</script>
+<script src="logic/accounts.js"></script>
+     </form>  
+      <!-- The Modal -->
+<div class="modal" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Extra Murals</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+      <div id="emtable">
+      <input type="text" class="form-control" id="Text4" style="display: none">
+       <table id="Table1" class="table table-bordered table-hover" cellspacing="0" width="100%">
+               <thead>
+                 <tr>
+                  <th style="display: none;">EmId</th>
+                  <th>Activity</th>
+                  <th></th>
+                 </tr>
+                </thead>
+                 <tbody>
+                 </tbody>
+             </table>
+             <button type="button" class="btn btn-info" onclick="addnew()"><i class="fa fa-plus"></i>Add Activity</button>
+      </div>
+    
+      <div id="emitem" style="display: none">
+      <div class="form-row">
+       <input type="text" class="form-control" id="Text3" style="display: none"/>
+                              <div class="form-group col-md-6">
+                                <input type="text" class="form-control" id="Text" placeholder="Activity"/> </div>
+      </div>
+      <div class="form-row">
+                              <div class="left-inner-addon">
+                              <span>R</span>
+                               <input type="text" class="form-control" id="Text2" placeholder="Monthly Fee"/></div>
+                               <div class="form-group col-md-2">
+                               <span>Monthly Pay Date:</span></div>
+                               <div class="form-group col-md-2">
+                                <input type="number" class="form-control" id="Number2" min="1" max="30" placeholder="0" onkeydown="return false" style="width: 80px" /></div>
+                               </div>
+                            <button type="button" id="Button1" class="btn btn-accent" onclick="CreateEm()" style="display: none">Add Activity</button>
+                            <button type="button" id="Button2" class="btn btn-accent" onclick="UpdateEm()" style="display: none">Update Activity</button>
+                            <a href="#" onclick="CancelEm()">cancel</a>
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+    </div>
+  </div>
+</div> 
+</div>
+
+<!-- Modal -->
+<div id="myModal2" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Record Transaction</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+      <div class="form-row"><input type="text" class="form-control" id="Text7" style="display: none" />
+                               <div class="form-group col-md-6">
+                               <input type="text" class="form-control" id="Text6" placeholder="Description on Statement" /></div>
+                               <div class="form-group col-md-6">
+                                 <fieldset id="radiobutton" class="form-group">
+                                 <label class="form-check-label">
+                                 <input type="radio" value="Debit" name="group1"/>Debit</label>
+                                 <label class="form-check-label">
+                                 <input type="radio" value="Credit" name="group1"/>Credit</label>
+                                 </fieldset></div>
+                               </div>
+        <div class="form-row">
+                              <div class="left-inner-addon">
+                              <span>R</span>
+                               <input type="text" class="form-control" id="Text5" placeholder="Amount"/></div>
+                               <div class="form-group col-md-6">
+                                <input type="text" class="form-control" placeholder="Date" id="date"/></div>
+                               </div>
+                            <button type="button" id="Button3" class="btn btn-accent" onclick="CreateTransact()">Record</button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Modal -->
+<div id="myModal3" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Student Statement</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+      <div id="printable">
+      <input type="text" class="form-control" id="Text8"/>
+      <div class="form-row">
+      <table id="Table2"  cellspacing="0" width="100%">
+               <thead>
+                 <tr>
+                  <th style="display: none;">StatementId</th>
+                  <th>Date</th>
+                  <th>Description</th>
+                  <th>(-)</th>
+                  <th>(+)</th>
+                 </tr>
+                </thead>
+                 <tbody>
+                 </tbody>
+                 <tfoot style="border-style: solid">
+    <tr>
+     <td style="display: none;"></td>
+     <td>Date</td>
+      <td>Balance</td>
+      <td></td>
+      <td style="font-weight: bold">$180</td>
+    </tr>
+  </tfoot>
+             </table>
+                              </div> </div>
+        
+                            <button type="button" id="Button4" class="btn btn-accent" onclick="javascript:printDiv('printable')">Print</button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div id="myNotify" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Send Notification to all</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+      <div class="form-row">
+                               <div class="form-group col-md-6">
+                               <input type="text" class="form-control" id="sendtitle" placeholder="Title" /></div>
+                               </div>
+        <div class="form-row">
+                               <div class="form-group col-md-6">
+                                <textarea class="form-control" id="sendnotify" name="Address" rows="5" placeholder="Notification (max 500 characters)"></textarea></div></div>
+                               </div>
+                            <button type="button" id="Button5" class="btn btn-accent" onclick="SendNotification()">Send</button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
+
+
+             
+
+
+
+
